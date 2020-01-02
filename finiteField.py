@@ -17,9 +17,13 @@ class FieldElement:
             return False
         return self.num == other.num and self.prime == other.prime
 
+    def __ne__(self, other):
+        return not (self == other)
+
 
 a = FieldElement(7, 13)
 b = FieldElement(6, 13)
+
 print(a == b)
 
 print (a == a)
