@@ -20,9 +20,19 @@ class FieldElement:
     def __ne__(self, other):
         return not (self == other)
 
+    def __add__(self, other):
+        if self.prime != other.prime: #We have to ensure that the elements are from the same finite field
+                                    # otherwise this calculation doesn't have meaning
+            raise TypeError('Cannot add two numbers in different Fields')
+        num = (self.num + other.num) % self.prime # Addition in a finite field is defined with modulo operator
+        return self.__class__(num, self.prime)# we have to return an instance of the class
+
 
 a = FieldElement(7, 13)
 b = FieldElement(6, 13)
+c = FieldElement(12, 13)
+
+print(a+b==c)
 
 print(a == b)
 
