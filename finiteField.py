@@ -27,6 +27,10 @@ class FieldElement:
         num = (self.num + other.num) % self.prime # Addition in a finite field is defined with modulo operator
         return self.__class__(num, self.prime)# we have to return an instance of the class
 
+    def __pow__(self, exponent):
+        num = (self.num ** exponent) % self.prime
+        return self.__class__(num, self.prime)
+
 
 a = FieldElement(7, 13)
 b = FieldElement(6, 13)
