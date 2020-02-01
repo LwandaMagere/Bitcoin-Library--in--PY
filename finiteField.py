@@ -23,7 +23,33 @@ class FieldElement:
             return False
         return self.num == other.num and self.prime == other.prime #The __eq__ method checks if two objects of class FieldElement are 
                                                                    #equal.This is only true when the num and prime properties are equal.
+    def __ne__ (self, other):
+        return not(self == other)
     
+    def __add__ (self, other):
+        if self.prime != other.prime: # We have to ensure that the elements are from the same finite field, otherwise this
+                                      #calculation doesn’t have any meaning.
+            raise TypeError('Cannot add two numbers in different Field')
+        num = ( self.num + other.num) % self.prime
+        return self.__class__(num, self.prime) #We have to return an instance of the class, which we can conveniently access with
+                                               #self.__class__ . We pass the two initializing arguments, num and self.prime ,
+                                               #for the __init__ method we saw earlier.
+    def __sub__(self, other):
+        if self.prime != other.prime:
+            raise TypeError('Cannot subtract two numbers in different Fields')    
+        num = (self.num - other.num) % self.prime
+        return self.__class__(num, self.prime)                                       
+
+
 a = FieldElement(7, 13)
 b = FieldElement(6, 13)
 print(a == b)
+
+#Coding Addition and Subtraction in Python
+
+a = FieldElement(7, 13)
+b = FieldElement(12, 13)
+c = FieldElement(6, 13)
+
+print(a + b == c)
+print(a - b == c)
