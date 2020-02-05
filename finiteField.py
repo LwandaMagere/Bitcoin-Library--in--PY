@@ -77,6 +77,13 @@ class Point:
         if self.y**2 != self.x**3 + a * x + b: # We check here that the point is actually on the curve.
             raise ValueError('({},{}) is not on the curve'.format(x,y)) 
     def __add__(self, other): # We overload the + operator here.
+        if self.x != other.x:
+            s = (other.y - self.y) / (other.x - self.x)
+            x = s**2 - self.x - other.x
+            y = s * (self.x - x) - self.y
+            return self.__class__(x, y, self.a, self.b)
+        if self.x == other.x and self.y != other.y:
+            return self.__class__(None, None, self.a, self.b)
         if self.a != other.a or self.b != other.b:
             raise TypeError('Points {}, {} is not on the same curve'.format(self, other))
         if self.x is None: #self.x being None means that self is the point at infinity, or the additive identity. Thus, we return other .
