@@ -77,6 +77,11 @@ class Point:
         if self.y**2 != self.x**3 + a * x + b: # We check here that the point is actually on the curve.
             raise ValueError('({},{}) is not on the curve'.format(x,y)) 
     def __add__(self, other): # We overload the + operator here.
+        if self == other:
+            s = (3* self.x**2 + self.a)/(2 * self.y)
+            x = s**2 - 2 * self.x
+            y = s * (self.x - x) - self.y
+            return self.__class__(x,y, self.a, self.b)
         if self.x != other.x:
             s = (other.y - self.y) / (other.x - self.x)
             x = s**2 - self.x - other.x
