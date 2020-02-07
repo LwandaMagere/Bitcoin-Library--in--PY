@@ -4,6 +4,10 @@
 #that represents a single finite field element. Naturally, we’ll name the class
 #FieldElement .
 
+from helper import run
+
+import ecc
+
 class FieldElement:
 
     def __init__(self, num, prime):
@@ -106,6 +110,26 @@ class Point:
     
 def on_curve(x, y):
         return y**2 == x**3 + 5 * x + 7
+
+class ECCTest(TestCase):
+
+    def test_on_curve(self):
+        prime = 223
+        a = FieldElement(0, prime)
+        b = FieldElement(7, prime)
+        valid_points = ((192, 105), (17, 56), (1, 193))
+        invalid_points = ((200, 119), (42, 99))
+        for x_raw, y_raw in valid_points:
+            x = FieldElement(x_raw, prime)
+            y = FieldElement(y_raw, prime)
+            Point(x, y, a, b)
+        for x_raw, y_raw in invalid_points:
+            x = FieldElement(x_raw, prime)
+            y = FieldElement(y_raw, prime)
+            with self.assertRaises(ValueError):
+                Point(x, y, a, b)
+
+run(ecc.ECCTest('test_on_curve'))
 
 print(on_curve(2,4))
 print(on_curve(-1, -1))
