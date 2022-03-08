@@ -138,7 +138,7 @@ print(on_curve(5,7))
 
 
 p1 = Point(-1, -1, 5, 7)        
-p2 = Point(-1, -2, 5, 7)
+p2 = Point(-1, -2, 9, 6)
 
 
 
